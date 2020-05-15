@@ -15,6 +15,8 @@ local xrandr = require("xrandr")
 
 local cpu_widget = require("cpu-widget")
 
+local markup = require("lain.util.markup")
+
 -- Load Debian menu entries
 -- require("debian.menu")
 -- local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
@@ -22,24 +24,24 @@ local cpu_widget = require("cpu-widget")
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+  naughty.notify({ preset = naughty.config.presets.critical,
+                   title = "Oops, there were errors during startup!",
+                   text = awesome.startup_errors })
 end
 
 -- Handle runtime errors after startup
 do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
+  local in_error = false
+  awesome.connect_signal("debug::error", function (err)
+                           -- Make sure we don't go into an endless error loop
+                           if in_error then return end
+                           in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
-        in_error = false
-    end)
+                           naughty.notify({ preset = naughty.config.presets.critical,
+                                            title = "Oops, an error happened!",
+                                            text = tostring(err) })
+                           in_error = false
+  end)
 end
 -- }}}
 
@@ -155,7 +157,8 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 -- mytextclock = wibox.widget.textclock("%a %b %d, %H:%M",10)
-mytextclock = wibox.widget.textclock(" %H:%M ",10)
+mytextclock = wibox.widget.textclock(" %H:%M",10)
+-- mytextclock = wibox.widget.textclock(markup(white, "%H:%M "),10)
 
 ------------------------------
 -- Initialize widget
@@ -266,14 +269,15 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s,fg = beautiful.fg_normal, height = 20, bg = beautiful.bg_normal, border_width = beautiful.border_width, border_color = beautiful.border_normal})
+    s.mywibox = awful.wibar({ position = "top", screen = s,fg = beautiful.fg_normal, height = 18, bg = beautiful.bg_normal, border_width = beautiful.border_width, border_color = beautiful.border_normal})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
       layout = wibox.layout.align.horizontal,
       { -- Left widgets
         layout = wibox.layout.fixed.horizontal,
-        mylauncher,
+        s.mylayoutbox,
+        -- mylauncher,
         s.mytaglist,
         s.mypromptbox,
       },
@@ -298,7 +302,7 @@ awful.screen.connect_for_each_screen(function(s)
         -- bat_icon,
         -- batwidget,
         mytextclock,
-        s.mylayoutbox,
+        -- s.mylayoutbox,
       },
     }
 end)
@@ -420,8 +424,8 @@ globalkeys = awful.util.table.join(
     {description = "restore minimized", group = "client"}),
 
   -- Prompt
-  awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-    {description = "run prompt", group = "launcher"}),
+  -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+  --   {description = "run prompt", group = "launcher"}),
 
   awful.key({ modkey }, "x",
     function ()
@@ -726,6 +730,7 @@ run_once("/usr/bin/gnome-keyring-daemon --start --foreground --components=secret
 run_once("touchegg")
 -- run_once("todoist")
 run_once("./trojan-1.14.1-linux-amd64/trojan/trojan trojan-1.14.1-linux-amd64/trojan/config.json")
+run_once("albert")
 -- run_once("./Dropbox/Apps/Shadowsocks-Qt5-3.0.1-x86_64.AppImage")
 
 -- run_once("./Lotion/lotion")
