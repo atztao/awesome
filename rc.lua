@@ -408,7 +408,7 @@ globalkeys = awful.util.table.join(
   awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
     {description = "select previous", group = "layout"}),
 
-  awful.key({ modkey, "Control" }, "n",
+  awful.key({ modkey, "Shift" }, "n",
     function ()
       local c = awful.client.restore()
       -- Focus restored client
