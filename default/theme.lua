@@ -14,7 +14,7 @@ local theme = {}
 theme.font          = "Monaco for Powerline Bold 10"
 
 theme.bg_normal     = "#000000"
-theme.bg_focus      = "#767680"
+theme.bg_focus      = "#666666"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -45,7 +45,8 @@ end
 -- Taglist
 theme.taglist_shape = less_rounded_rect_shape
 -- theme.taglist_bg = "#6f15cb"
-theme.taglist_bg_focus = "#767680"
+-- theme.taglist_bg_focus = "#767680"
+theme.taglist_bg_focus = "#666666"
 theme.taglist_fg_focus = "#ffffff"
 
 -- Tasklist
