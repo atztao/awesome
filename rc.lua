@@ -15,7 +15,9 @@ local xrandr = require("xrandr")
 
 local cpu_widget = require("cpu-widget")
 
-local markup = require("lain.util.markup")
+-- local lain = require("lain")
+-- local markup = lain.util.markup
+
 
 -- Load Debian menu entries
 -- require("debian.menu")
@@ -156,9 +158,12 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
--- mytextclock = wibox.widget.textclock("%a %b %d, %H:%M",10)
-mytextclock = wibox.widget.textclock(" %H:%M",10)
--- mytextclock = wibox.widget.textclock(markup(white, "%H:%M "),10)
+mytextclock = wibox.widget.textclock(" %a %b %d, %H:%M",10)
+-- local mytextclock = wibox.widget.textclock(" %H:%M",10)
+-- mytextclock = wibox.widget.textclock(markup(gray, " %a")
+--                                 .. markup(white, " %d ") .. markup(gray, "%b ") ..  markup(white, "%H:%M "))
+-- local mytextclock = wibox.widget.textclock(markup.fg.color(gray, "%H:%M "))
+
 
 ------------------------------
 -- Initialize widget
@@ -249,7 +254,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1:Term", "2:Net", "3:Music", "4:Mail" }, s, awful.layout.layouts[1])
+    awful.tag({ "1:Term.", "2:www/Web", "3:Music", "4:Devel.", "五", "六" }, s, awful.layout.layouts[1])
     -- awful.tag({ "1:Net", "2:Term", "3:Music", "4:Code" }, s,  awful.layout.suit.floating)
 
     -- Create a promptbox for each screen
@@ -269,7 +274,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s,fg = beautiful.fg_normal, height = 18, bg = beautiful.bg_normal, border_width = beautiful.border_width, border_color = beautiful.border_normal})
+    s.mywibox = awful.wibar({ position = "top", screen = s,fg = beautiful.fg_normal, height = 20, bg = beautiful.bg_normal, border_width = beautiful.border_width, border_color = beautiful.border_normal})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -285,7 +290,7 @@ awful.screen.connect_for_each_screen(function(s)
       { -- Right widgets
         layout = wibox.layout.fixed.horizontal,
         --    mykeyboardlayout,
-        cpuwidget,
+        -- cpuwidget,
         memwidget,
         --batterywidget,
 
@@ -331,14 +336,16 @@ globalkeys = awful.util.table.join(
   awful.key({  }, "#233", function () awful.util.spawn("xbacklight -inc 10") end),
   -- awful.key({modkey}, ";", function() xrandr.xrandr() end),
 
-  awful.key({ modkey, }, "g", function () awful.util.spawn("google-chrome-stable --force-device-scale-factor=1.12 %U --ppapi-flash-path=/home/zhangtao/.config/google-chrome/PepperFlash/libpepflashplayer.so") end),
+  awful.key({ modkey, }, "g", function () awful.util.spawn("google-chrome-stable --force-device-scale-factor=1.24 %U --ppapi-flash-path=/home/zhangtao/.config/google-chrome/PepperFlash/libpepflashplayer.so") end),
   awful.key({ modkey, }, "e", function () awful.util.spawn("emacs") end),
   awful.key({ modkey, }, "v", function () awful.util.spawn("konsole -e vim") end),
   awful.key({ modkey, }, "i", function () awful.util.spawn("firefox") end),
   awful.key({ modkey, }, "d", function () awful.util.spawn("nautilus") end),
   awful.key({ modkey, }, "a", function () awful.util.spawn("netease-cloud-music") end),
+  awful.key({ modkey, }, "r", function () awful.util.spawn("rofi -show run") end),
   --    awful.key({ modkey, "Control" }, "t", function () awful.util.spawn("thunar") end),
   awful.key({ "Mod1", "Control" }, "l", function () awful.util.spawn("i3lock") end),
+
 
   --------------------------------------
 
@@ -697,6 +704,7 @@ for s = 1, screen.count() do
 end
 
 
+
 -- AutoStart
 
 run_once("fcitx")
@@ -730,7 +738,10 @@ run_once("/usr/bin/gnome-keyring-daemon --start --foreground --components=secret
 run_once("touchegg")
 -- run_once("todoist")
 run_once("./trojan-1.14.1-linux-amd64/trojan/trojan trojan-1.14.1-linux-amd64/trojan/config.json")
-run_once("albert")
+-- run_once("albert")
 -- run_once("./Dropbox/Apps/Shadowsocks-Qt5-3.0.1-x86_64.AppImage")
-
+run_once("xautolock -time 10 -locker 'i3lock -e -c 007f7f'")
 -- run_once("./Lotion/lotion")
+
+-- awful.util.spawn_with_shell("xinput set-prop 'SynPS/2 Synaptics TouchPad' 'Synaptics Edge Scrolling' 0 0 0")
+-- awful.util.spawn_with_shell("xinput set-prop 'SynPS/2 Synaptics TouchPad' 'Synaptics Tap Time' 0")

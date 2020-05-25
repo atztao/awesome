@@ -11,7 +11,8 @@ local themes_path = "~/.config/awesome/"
 
 local theme = {}
 
-theme.font          = "Monaco for Powerline Bold 10"
+-- theme.font          = "Monaco for Powerline Bold 10"
+theme.font          = "Monaco for Powerline 10"
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#666666"
